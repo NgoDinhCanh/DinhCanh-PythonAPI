@@ -1,0 +1,638 @@
+{
+  "Uuid": "e546e4f7-9d8e-4cc4-853a-b111dcc071e5",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Test Code",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Autodesk.BoundingBox": {
+        "Key": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.BoundingBox": {
+        "Key": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Surface": {
+        "Key": "Autodesk.DesignScript.Geometry.Surface",
+        "Value": "ProtoGeometry.dll"
+      },
+      "PolySurface": {
+        "Key": "Autodesk.DesignScript.Geometry.PolySurface",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "D:\\Học Python\\MainFormModelCad.py",
+      "InputValue": ".\\MainFormModelCad.py",
+      "NodeType": "ExtensionNode",
+      "Id": "d13e1294340247daa8cbf806219b5562",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "40b7e5bacb154a028ff66c6deb402ca6",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "if IN[0] == True:\r\n\tOUT = IN[1]\r\nelse:\r\n\tOUT = IN[1]",
+      "VariableInputPorts": true,
+      "Id": "eea7e479c5ff4d7c9b2cedc75826a835",
+      "Inputs": [
+        {
+          "Id": "76dfbe7c7d724b91845b673a4389f9dd",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0b25495a48b34b9d9aef7794bb92da58",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "061ee7f661b04afc91ff53d58b5f137e",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "b9b4373f401e480ea832bcd87c6dfa90",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6e6ac89e2898471c9a37b42f886a2237",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "2201a4ad09544c3d974de729736b615d",
+      "Inputs": [
+        {
+          "Id": "1ba910dff1514242bec8ac0d63283db1",
+          "Name": "script",
+          "Description": "Python script to run.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b7f2c70efcf14d1ab418ce971492d050",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6c8f0e125ef642d5b5ccc305ee5c0bad",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs a Python script from a string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.IO.FileSystem.ReadText@var",
+      "Id": "f1d1d171ccd240b3988f99701c9d564f",
+      "Inputs": [
+        {
+          "Id": "98b01d2310714364ac2a6919edfd4cfb",
+          "Name": "file",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fa1e27c5247544e7807c559040d05a7b",
+          "Name": "str",
+          "Description": "Contents of the text file.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Reads a text file and returns the contents as a string.\n\nFileSystem.ReadText (file: var): string"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Object.Type@var",
+      "Id": "51b8173bc005425390034560786701b7",
+      "Inputs": [
+        {
+          "Id": "bfd98864ae1b4db7a8573003fa670d04",
+          "Name": "obj",
+          "Description": "An object.\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7a4a1bc98fbe4583a22471f35b70ed46",
+          "Name": "string",
+          "Description": "Type of object.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the type of object represented as string.\n\nObject.Type (obj: var): string"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo \r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry \r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện \r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') \r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\nimport ngodinhcanh as ndc \r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument \r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument \r\n\r\nlayerName = IN[1][0]\r\nSelectedCadLink = IN[2]\r\nallSolid = ndc.GetSolids(SelectedCadLink)\r\n# allHatchs = ndc.GetHatchLayerName(SelectedCadLink,layerName)   \r\n# allCurve = [ndc.allCurves(i) for i in allHatchs]\r\n# len_ShortLong = [ndc.getCurveShortLong(i) for i in allCurve]\r\n# vertice_Column = [ndc.verticesColumn(i) for i in allHatchs]\r\n# angel = [ndc.Angel(i) for i in (len_ShortLong[3][3])]\r\nOUT = allSolid",
+      "VariableInputPorts": true,
+      "Id": "d02e724ae5cb49d5acc4d7c0f23bbaeb",
+      "Inputs": [
+        {
+          "Id": "7db3ecf9568f41d48bed2321820ef567",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c51159bd1e0a4524a74c107f178f37e2",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "56bf99a4e0854a2c8b35f4bc6bd79fac",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b8fc50526a7f4c18880e34879810f99e",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "5fb23c4532da4fbf8febe717d61a4e6b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "836afe3f95984777a7d765330e581909",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "a[0];",
+      "Id": "9aeb2d07db774dcaa1e82a0c7dd564fd",
+      "Inputs": [
+        {
+          "Id": "b78a5423cd034899adf0534d8d3f0a66",
+          "Name": "a",
+          "Description": "a",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "75cba8eb84d24f1b8952997854ddbae3",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "a[6];",
+      "Id": "6a8cc7dd147d42deb2e1dee91c2db392",
+      "Inputs": [
+        {
+          "Id": "de9eb2d553814be480b739397d888dca",
+          "Name": "a",
+          "Description": "a",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "42d227d0a26a450dbbc8677b9fede9cf",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\nfrom ngodinhcanh import GetHatchLayerName\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo \r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry \r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện \r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') \r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument \r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument \r\n\r\nobType = ObjectType.Element\r\nref = uidoc.Selection.PickObject(obType,'Please select model Cad import')\r\nSelectedCadLink = doc.GetElement(ref)\r\nSelectedCadLink2 = IN[1]\r\nLayerName = IN[2]\r\ndef GetSolids(cadInstance):\r\n    opt = Options()\r\n    allSolids = []\r\n    geoElement = cadInstance.get_Geometry(opt)\r\n    for geoObject in geoElement:\r\n        geoInstance = geoObject.GetInstanceGeometry()\r\n        for geoObject2 in geoInstance: \r\n            if geoObject2.GetType() == Solid and geoObject2.SurfaceArea > 0 :\r\n               allSolids.append(geoObject2)\r\n    return allSolids\r\ndef GetHatchLayerName(cadInstance,layerName):\r\n    allHatch = []\r\n    solids = GetSolids(cadInstance)\r\n    if solids.Count == 0:\r\n         return allHatch\r\n    for solid in solids:\r\n        for face in solid.Faces :\r\n            graphicsStyle = cadInstance.Document.GetElement(face.GraphicsStyleId)\r\n            if graphicsStyle == None :\r\n                continue\r\n            styleCategory = graphicsStyle.GraphicsStyleCategory\r\n            if styleCategory.Name.Equals(layerName):\r\n                allHatch.Add(face)\r\n    return allHatch\r\nallHatchs = GetHatchLayerName(SelectedCadLink,LayerName)\r\nallSolids = GetSolids(SelectedCadLink)\r\nOUT = allSolids,SelectedCadLink,allHatchs,SelectedCadLink",
+      "VariableInputPorts": true,
+      "Id": "89b803da3baa4d35802b1ff2753e3120",
+      "Inputs": [
+        {
+          "Id": "2943f93287ae435a90d4fd4a6f4db63e",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4a7274bd21e8493fa20e570f484366f8",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dfdc7aed51aa452da9dd7a545451cc0f",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f3544696c991411392858dc15c4dba90",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "117d93a55e9e44af9cac062ec0cdd5f2",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "86ec258fa7604af380b3b8d5620331f4",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "40b7e5bacb154a028ff66c6deb402ca6",
+      "End": "0b25495a48b34b9d9aef7794bb92da58",
+      "Id": "c209b648cc3f4be7a83811acd2f8b8fe"
+    },
+    {
+      "Start": "061ee7f661b04afc91ff53d58b5f137e",
+      "End": "98b01d2310714364ac2a6919edfd4cfb",
+      "Id": "01978211532d4ce487d2c191aa2c4413"
+    },
+    {
+      "Start": "6e6ac89e2898471c9a37b42f886a2237",
+      "End": "76dfbe7c7d724b91845b673a4389f9dd",
+      "Id": "d31182251c0c4699b33494cc72c69dc6"
+    },
+    {
+      "Start": "6c8f0e125ef642d5b5ccc305ee5c0bad",
+      "End": "bfd98864ae1b4db7a8573003fa670d04",
+      "Id": "54171075f442444285a24d3dccb4ab0c"
+    },
+    {
+      "Start": "6c8f0e125ef642d5b5ccc305ee5c0bad",
+      "End": "c51159bd1e0a4524a74c107f178f37e2",
+      "Id": "f92cd0c63b21468a8a00dc3e98370694"
+    },
+    {
+      "Start": "6c8f0e125ef642d5b5ccc305ee5c0bad",
+      "End": "b78a5423cd034899adf0534d8d3f0a66",
+      "Id": "70daecb32f9a4a09a77849bd7e592b0b"
+    },
+    {
+      "Start": "6c8f0e125ef642d5b5ccc305ee5c0bad",
+      "End": "de9eb2d553814be480b739397d888dca",
+      "Id": "d19b55a0d42d4c0590748f77220847ee"
+    },
+    {
+      "Start": "fa1e27c5247544e7807c559040d05a7b",
+      "End": "1ba910dff1514242bec8ac0d63283db1",
+      "Id": "f5de8f000e1e4188880a7e4832844ff0"
+    },
+    {
+      "Start": "836afe3f95984777a7d765330e581909",
+      "End": "7db3ecf9568f41d48bed2321820ef567",
+      "Id": "51437b56349e4149b52e14376bf95dc0"
+    },
+    {
+      "Start": "75cba8eb84d24f1b8952997854ddbae3",
+      "End": "dfdc7aed51aa452da9dd7a545451cc0f",
+      "Id": "3742a4b10deb416f805d7225b841921b"
+    },
+    {
+      "Start": "42d227d0a26a450dbbc8677b9fede9cf",
+      "End": "56bf99a4e0854a2c8b35f4bc6bd79fac",
+      "Id": "051aaf1a1e3a4283927c77693e9c14bf"
+    },
+    {
+      "Start": "42d227d0a26a450dbbc8677b9fede9cf",
+      "End": "4a7274bd21e8493fa20e570f484366f8",
+      "Id": "b7594e2bc678444b8851b1d646bd65ee"
+    },
+    {
+      "Start": "86ec258fa7604af380b3b8d5620331f4",
+      "End": "2943f93287ae435a90d4fd4a6f4db63e",
+      "Id": "2dc9e8d517474673a261a1cd14da9604"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "d13e1294340247daa8cbf806219b5562",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -117.21220323248968,
+        "Y": 128.5462219525561
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "eea7e479c5ff4d7c9b2cedc75826a835",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 102.61590621777668,
+        "Y": 60.437206854518877
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "b9b4373f401e480ea832bcd87c6dfa90",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -113.22713887389034,
+        "Y": 28.066104403684278
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script From String",
+        "Id": "2201a4ad09544c3d974de729736b615d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 442.73534036198487,
+        "Y": 41.510695960933987
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "FileSystem.ReadText",
+        "Id": "f1d1d171ccd240b3988f99701c9d564f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 269.78888239958957,
+        "Y": 59.730591163781071
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Object.Type",
+        "Id": "51b8173bc005425390034560786701b7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 936.19577271556955,
+        "Y": 63.573776174032389
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "d02e724ae5cb49d5acc4d7c0f23bbaeb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 844.65299700051582,
+        "Y": 463.05480347587047
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "5fb23c4532da4fbf8febe717d61a4e6b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 645.57176007421845,
+        "Y": 415.55925817868081
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "9aeb2d07db774dcaa1e82a0c7dd564fd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 764.30024430379376,
+        "Y": -64.615196058323932
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "6a8cc7dd147d42deb2e1dee91c2db392",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 21.081911114886282,
+        "Y": 370.30787857372303
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "89b803da3baa4d35802b1ff2753e3120",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 525.96403184874487,
+        "Y": 567.5755973273715
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "117d93a55e9e44af9cac062ec0cdd5f2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -143.73111367896371,
+        "Y": 384.43038744248616
+      }
+    ],
+    "Annotations": [],
+    "X": 141.13465693855238,
+    "Y": 49.599492400756191,
+    "Zoom": 0.66624352197365688
+  }
+}

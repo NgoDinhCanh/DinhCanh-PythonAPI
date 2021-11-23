@@ -1,0 +1,575 @@
+{
+  "Uuid": "0d3cfe43-9c25-4ead-b5f8-63648f883430",
+  "IsCustomNode": true,
+  "Category": "N3XT",
+  "Description": "Get coordinates of polylines by layer",
+  "Name": "DWG.PolyLine.ByLayerGetCoordinates",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n\r\nitems = IN[0]\r\nlst1 = []\r\nlst2 = []\r\npointlst = []\r\n\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor item in items:\r\n\txyzpnt = item.GetCoordinates()\r\n\tlst1.append(xyzpnt)\r\nfor lst2 in lst1:\r\n\tpntlst = []\r\n\tif len(lst2) == 5 :\r\n\t\tfor pnt in lst2:\r\n\t\t\tp = pnt.ToPoint()\r\n\t\t\tpntlst.append(p)\r\n\tpointlst.append(pntlst)\r\n\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\nOUT = pointlst",
+      "VariableInputPorts": true,
+      "Id": "167f4d116af74bb4b51c8fedf4be08fe",
+      "Inputs": [
+        {
+          "Id": "90f922d00ff04044b02a9b918c17c920",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5af88761a6c74bc6a03f8b1288ff87f2",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n\r\nitems = IN[0]\r\n\r\noutput = []\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor item in items:\r\n\tif hasattr(item, \"NumberOfCoordinates\"):\r\n\t\toutput.append(item)\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\nOUT = output",
+      "VariableInputPorts": true,
+      "Id": "169b99ada1184d368b2f7fd8f1ce6978",
+      "Inputs": [
+        {
+          "Id": "ee65918d3f434e89bf6a94d29d421d3d",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "45b1fb26a86341b392a07a5990cc4293",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.Translate@double,double,double",
+      "Id": "f77bfd9df0c14274bc91c31f516b0dc8",
+      "Inputs": [
+        {
+          "Id": "bab5fd23c5aa47e1afcfa2c851a35daa",
+          "Name": "geometry",
+          "Description": "Autodesk.DesignScript.Geometry.Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "617d0d4952bf457697ba1954e521a3c7",
+          "Name": "xTranslation",
+          "Description": "Displacement along X-axis.\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6e328ff006694509b645d01133f12dbd",
+          "Name": "yTranslation",
+          "Description": "Displacement along Y-axis.\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "baf92b5364ca4bf19225c50630b08a6f",
+          "Name": "zTranslation",
+          "Description": "Displacement along Z-axis.\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "be7e0b98efd743e3bb32518c72729ae0",
+          "Name": "Geometry",
+          "Description": "Transformed Geometry.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Longest",
+      "Description": "Translates any given geometry by the given displacements in the x, y, and z directions defined in WCS respectively.\n\nGeometry.Translate (xTranslation: double = 0, yTranslation: double = 0, zTranslation: double = 0): Geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.X",
+      "Id": "3294c416ff4f4810bb2503f58789c995",
+      "Inputs": [
+        {
+          "Id": "3c46933840324e64b16161a0833b6acf",
+          "Name": "point",
+          "Description": "Autodesk.DesignScript.Geometry.Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "01f1039f6c1f47adae7347c8a235d0af",
+          "Name": "double",
+          "Description": "double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the X component of a Point\n\nPoint.X: double"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.Y",
+      "Id": "fcff46384d0e4508bc5c20f52815ddc6",
+      "Inputs": [
+        {
+          "Id": "55947240c4244e14af84c208bdbfddba",
+          "Name": "point",
+          "Description": "Autodesk.DesignScript.Geometry.Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "040ac830c7fc4c968a19ecdb73c00db5",
+          "Name": "double",
+          "Description": "double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the Y component of a Point\n\nPoint.Y: double"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\nimport clr\nclr.AddReference(\"RevitAPI\")\nimport Autodesk\nfrom Autodesk.Revit.DB.Events import *\nfrom Autodesk.Revit.DB import *\nfrom math import *\n\nclr.AddReference('ProtoGeometry')\nfrom Autodesk.DesignScript.Geometry import *\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.Elements)\nclr.ImportExtensions(Revit.GeometryConversion)\n\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\n##############################################################\ndoc = DocumentManager.Instance.CurrentDBDocument\n\ndwg = UnwrapElement(IN[0])\noutput = []\n\nTransactionManager.Instance.EnsureInTransaction(doc)\nfor geometryObj in dwg.get_Geometry(Options()):\n\ttrans = geometryObj.Transform\n\to = trans.Origin\n\tori = o.ToPoint()\n\toutput.append(ori)\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT =  output",
+      "VariableInputPorts": true,
+      "Id": "5ba76ea0ef9e493f8eb397249da9ea9a",
+      "Inputs": [
+        {
+          "Id": "48873343f793471bb6c549ab84e07a09",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "397c7302f26940928ae4e3937bdf2a48",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.Z",
+      "Id": "5715f2c2b1b34302aaf056ff8cd70e31",
+      "Inputs": [
+        {
+          "Id": "2a75b4bba6ae48d597c23fcff26afb97",
+          "Name": "point",
+          "Description": "Autodesk.DesignScript.Geometry.Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "00dfaf007fbc4b94886ab748e31f2077",
+          "Name": "double",
+          "Description": "double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the Z component of a Point\n\nPoint.Z: double"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "\nimport clr\nclr.AddReference(\"RevitAPI\")\nimport Autodesk\nfrom Autodesk.Revit.DB.Events import *\nfrom Autodesk.Revit.DB import *\nfrom math import *\n\nclr.AddReference('ProtoGeometry')\nfrom Autodesk.DesignScript.Geometry import *\n\nclr.AddReference(\"RevitNodes\")\nimport Revit\nclr.ImportExtensions(Revit.Elements)\nclr.ImportExtensions(Revit.GeometryConversion)\n\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\n#############################################################\ndoc = DocumentManager.Instance.CurrentDBDocument\n\ndwg = UnwrapElement(IN[0])\nkeyword = IN[1]\npolylst = []\ndwgInstance = []\n\n\nTransactionManager.Instance.EnsureInTransaction(doc)\nfor geometryObj in dwg.get_Geometry(Options()):\n\tdwgInstance.append(geometryObj)\n\tfor dwg in dwgInstance:\n\t\tpolyObject = dwg.SymbolGeometry\n\t\tfor poly in polyObject:\t\t\t\n\t\t\tif poly.GetType() == Autodesk.Revit.DB.PolyLine and doc.GetElement(poly.GraphicsStyleId).GraphicsStyleCategory.Name.find(keyword) != -1:\t\t\n\t\t\t\tpolylst.append(poly)\n\nTransactionManager.Instance.TransactionTaskDone()\n\nOUT =  polylst\n",
+      "VariableInputPorts": true,
+      "Id": "00b0b69c81df406a95649b08c797318b",
+      "Inputs": [
+        {
+          "Id": "14ace5a145204825a8bded23492f13a0",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e837bc1b9b2e44ebb34c2368cddcde9a",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3c8f0dff4f0f4c64ad989f3211551cfe",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "DWGInstance",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "e230a3790ea04a1b8d2ca1717f99fb84",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "82a32913f67d4003991faf8c71c0f296",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "LayerName",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "7bb45a24fee342158ef1596ded7ec23f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "232c2c028be64f05be3d76bfac2d291b",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "TranslatedCoordinates",
+      "Id": "046d6b7af40e420ca694297e9051d320",
+      "Inputs": [
+        {
+          "Id": "9efc71702954438898759a7af40ce578",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5af88761a6c74bc6a03f8b1288ff87f2",
+      "End": "bab5fd23c5aa47e1afcfa2c851a35daa",
+      "Id": "01eb2b7e97744470896d339fb8f41b6e"
+    },
+    {
+      "Start": "45b1fb26a86341b392a07a5990cc4293",
+      "End": "90f922d00ff04044b02a9b918c17c920",
+      "Id": "325b69ba11c74d588ab35d31027bf8f3"
+    },
+    {
+      "Start": "be7e0b98efd743e3bb32518c72729ae0",
+      "End": "9efc71702954438898759a7af40ce578",
+      "Id": "74a177448f9149d98ecd0699b09170d3"
+    },
+    {
+      "Start": "01f1039f6c1f47adae7347c8a235d0af",
+      "End": "617d0d4952bf457697ba1954e521a3c7",
+      "Id": "6e398d2791bd40b2821d6cff7d2b0b4b"
+    },
+    {
+      "Start": "040ac830c7fc4c968a19ecdb73c00db5",
+      "End": "6e328ff006694509b645d01133f12dbd",
+      "Id": "0610f73d025546208d9c5a0631fa5b9d"
+    },
+    {
+      "Start": "397c7302f26940928ae4e3937bdf2a48",
+      "End": "3c46933840324e64b16161a0833b6acf",
+      "Id": "f23a2b430b0946e0bd6301b5e6f0df77"
+    },
+    {
+      "Start": "397c7302f26940928ae4e3937bdf2a48",
+      "End": "55947240c4244e14af84c208bdbfddba",
+      "Id": "a44b45a8d5b4406b8e501fa3ded5e4c0"
+    },
+    {
+      "Start": "397c7302f26940928ae4e3937bdf2a48",
+      "End": "2a75b4bba6ae48d597c23fcff26afb97",
+      "Id": "ff4baa68a81345bfb3b24494f934e85e"
+    },
+    {
+      "Start": "00dfaf007fbc4b94886ab748e31f2077",
+      "End": "baf92b5364ca4bf19225c50630b08a6f",
+      "Id": "90818b52567d4d6a8bc913b243d7b660"
+    },
+    {
+      "Start": "3c8f0dff4f0f4c64ad989f3211551cfe",
+      "End": "ee65918d3f434e89bf6a94d29d421d3d",
+      "Id": "ef4f418d642a487797a2aae0bdb85da2"
+    },
+    {
+      "Start": "82a32913f67d4003991faf8c71c0f296",
+      "End": "14ace5a145204825a8bded23492f13a0",
+      "Id": "e952927cc0d5468e8795b70e68eaaf65"
+    },
+    {
+      "Start": "82a32913f67d4003991faf8c71c0f296",
+      "End": "48873343f793471bb6c549ab84e07a09",
+      "Id": "0b00c27e1aac4412980d80c849fda7dd"
+    },
+    {
+      "Start": "232c2c028be64f05be3d76bfac2d291b",
+      "End": "e837bc1b9b2e44ebb34c2368cddcde9a",
+      "Id": "f5a9d2e82a134e2eb1d88d52b05091ad"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.6.1.8786",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "CADPolyLine.Coordinates",
+        "Id": "167f4d116af74bb4b51c8fedf4be08fe",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1365.4671255204444,
+        "Y": 2058.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "CADPolyLine.FilterPolyLine",
+        "Id": "169b99ada1184d368b2f7fd8f1ce6978",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1056.8778713911706,
+        "Y": 2058.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Geometry.Translate",
+        "Id": "f77bfd9df0c14274bc91c31f516b0dc8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1667.4671255204444,
+        "Y": 2163.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Point.X",
+        "Id": "3294c416ff4f4810bb2503f58789c995",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1365.4671255204444,
+        "Y": 2142.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Point.Y",
+        "Id": "fcff46384d0e4508bc5c20f52815ddc6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1365.4671255204444,
+        "Y": 2250.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "GetDWGInstanceOrigin",
+        "Id": "5ba76ea0ef9e493f8eb397249da9ea9a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1057.4671255204444,
+        "Y": 2250.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Point.Z",
+        "Id": "5715f2c2b1b34302aaf056ff8cd70e31",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1365.4671255204444,
+        "Y": 2358.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "CAD.PolyLineByLayer",
+        "Id": "00b0b69c81df406a95649b08c797318b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 777.46712552044437,
+        "Y": 2058.0157491532864
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "e230a3790ea04a1b8d2ca1717f99fb84",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 64.966842045940382,
+        "Y": 2276.8979042162655
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "7bb45a24fee342158ef1596ded7ec23f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 61.202628366600095,
+        "Y": 2102.4413427467389
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "046d6b7af40e420ca694297e9051d320",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2274.066850714516,
+        "Y": 2163.9359531757755
+      }
+    ],
+    "Annotations": [],
+    "X": 265.13203729766394,
+    "Y": -107.71613926598957,
+    "Zoom": 0.31657154932151488
+  }
+}

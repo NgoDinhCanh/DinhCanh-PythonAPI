@@ -1,0 +1,122 @@
+{
+  "Uuid": "5e5f78e5-f852-4df3-a4dd-2f4dfd5f410d",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Lọc Face and Soild",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n# # Select model elements\r\n# select_ref = uidoc.Selection.PickObjects(ObjectType.Element,'Please select model element') #Mới lấy ra được list tham chiếu\r\n# result = []\r\n# for i in select_ref:\r\n#     get_el = doc.GetElement(i) #Lấy element và id\r\n#     get_Geo = get_el.get_Geometry(Options()) \r\n    \r\n#     # get_sol = SpatialElementGeometryResults.GetGeometry() #Lấy solid\r\n#     result.append(get_Geo)\r\n\r\n# Select model elements\r\n#select_ref = uidoc.Selection.PickObject(ObjectType.Element,'Please select model element') #Mới lấy ra được list tham chiếu\r\n#result = []\r\nref = uidoc.Selection.PickObjects(ObjectType.Element,'Please select model element')\r\nel = []\r\nfor i in ref:\r\n    element = doc.GetElement(i.ElementId)\r\n    el.append(element.ToDSType(True))\r\n    \r\ndef GetSolidElement(element):\r\n    geo = []\r\n    opt = Options() # Phan tic tinh toan hinh hoc \r\n    opt.ComputeReferences = True\r\n    opt.IncludeNonVisibleObjects = True\r\n    opt.DetailLevel = ViewDetailLevel.Fine\r\n    geometry = element.get_Geometry(opt)\r\n    for i in geometry: \r\n        geo.append(i)\r\n    return geometry\r\ndef GetSolidFromGeo(lstGeo):\r\n    sol = []\r\n    for i in lstGeo:\r\n        if i.GetType() == Solid and i.Volume > 0:\r\n            sol.append(i)\r\n        elif i.GetType() == GeometryInstance:\r\n            var = i.GetInstanceGeometry\r\n            for j in var:\r\n                if j.GetType() == Solid and j.Volume > 0:\r\n                    sol.append(j)\r\n    return sol\r\ndef GetPlanarFromSolid(solids):\r\n    re = []\r\n    for i in solids:\r\n        re.append(i.Faces)\r\n        return re[0]\r\n    \r\ngeo = GetSolidElement(el)\r\nsolid = GetSolidFromGeo(geo)\r\nplanar = GetPlanarFromSolid(solid)\r\n#Output:\r\nOUT = geo,solid,planar",
+      "VariableInputPorts": true,
+      "Id": "580a73f2791542ac9f7f44702c79177e",
+      "Inputs": [
+        {
+          "Id": "6629135e8e61456ca113edea61caf7c1",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e82d952c6c17430a9dc281920ad5b99f",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "40836550a2324b31a96ccfb8e4c8d7a9",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5b91b1dadd5c41b6aa136398eeba377d",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5b91b1dadd5c41b6aa136398eeba377d",
+      "End": "6629135e8e61456ca113edea61caf7c1",
+      "Id": "64a67d35aea04bfba8562a8b38b8c0ca"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 100.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "580a73f2791542ac9f7f44702c79177e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 361.62089328760106,
+        "Y": 391.96134438874475
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "40836550a2324b31a96ccfb8e4c8d7a9",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 209.64224659103246,
+        "Y": 391.31679771856028
+      }
+    ],
+    "Annotations": [],
+    "X": -232.36523720155753,
+    "Y": -148.33653562142842,
+    "Zoom": 1.3775833525586674
+  }
+}

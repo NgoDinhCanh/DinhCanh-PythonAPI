@@ -1,0 +1,1006 @@
+{
+  "Uuid": "11193521-8c5d-414b-80bf-7845645c1912",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Template",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nref = uidoc.Selection.PickObjects(ObjectType.Element,'Please select model element')\r\nresult = []\r\nfor i in ref:\r\n    element = doc.GetElement(i.ElementId)\r\n    result.append(element.ToDSType(True))\r\nOUT = result",
+      "VariableInputPorts": true,
+      "Id": "9e2fe539920a4e28a666d5aaa47db5c1",
+      "Inputs": [
+        {
+          "Id": "3b50ecf19f044a7ca7f29aad3b4ef9f5",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "aff262c35d294c7eb1cb7299cba3f3d6",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "3af1e97002864e4eaee8cccc7d97bf1d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5c78183c2a224e418853f4565fb48c62",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nobType = ObjectType.Element\r\nref = uidoc.Selection.PickObject(obType,'Please select model element')\r\nel = doc.GetElement(ref.ElementId)\r\n\r\nOUT = el",
+      "VariableInputPorts": true,
+      "Id": "e07cefa30b504e609e4b0476bfc9714b",
+      "Inputs": [
+        {
+          "Id": "8aa666eeb0e142ab9a9879ee0fc0105c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f6d3daccee934e8e9392cda4fd987cd4",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "c8f96dde1d2945f0843272fa522b8d9c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2b2c72dda6d14a429f1870288b015b51",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nref = uidoc.Selection.PickObject(ObjectType.Face,'Please select face')\r\ne = uidoc.Document.GetElement(ref.ElementId)\r\nget_Geo = e.GetGeometryObjectFromReference(ref)\r\nget_Surface = get_Geo.ToProtoType(True)\r\nOUT = get_Surface",
+      "VariableInputPorts": true,
+      "Id": "1769c0af467e43e8b75c4c72eaf391f6",
+      "Inputs": [
+        {
+          "Id": "d927905d9056404e861b9cb65cc484e1",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "38d4a26d9c70483b8428c71bff15c9c5",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "f11cd7b345524e548ad16dd4d405b003",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3fcec51820fd4d08aaa8538d39a2e35a",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nref = uidoc.Selection.PickObjects(ObjectType.Face,'Please select face')\r\nre= []\r\nfor i in ref:\r\n    e = uidoc.Document.GetElement(i.ElementId)\r\n    get_Geo = e.GetGeometryObjectFromReference(i)\r\n    re.append(get_Geo.GetEdgesAsCurveLoops())\r\n\r\nOUT = re",
+      "VariableInputPorts": true,
+      "Id": "b6cd66c187cb4e479f6a48930a859bdd",
+      "Inputs": [
+        {
+          "Id": "4d2260b85f534a439c2b1de92ed3668d",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0101497e69b1459da2031e1388bfceba",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "648a7a5d7ed244dbaa250c73c48c1dc7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "129a9ef4066f4ffd9806c97cff78c6fc",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\nOUT = [t.ToProtoType() for i in IN[0] for j in i for t in j]",
+      "VariableInputPorts": true,
+      "Id": "c90f054639d840f0a52e3b5f87a68041",
+      "Inputs": [
+        {
+          "Id": "0a0b22b96ef34486bbb9adb34e52f022",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2d685677ad614ca69bef8dbaad90bc5c",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nref = uidoc.Selection.PickObjects(ObjectType.Edge,'Please select Edges')\r\nedges = []\r\nfor i in range(len(ref)):\r\n    el = doc.GetElement(ref[i].ElementId)\r\n    edge = el.GetGeometryObjectFromReference(ref[i])\r\n    edges.append(edge.AsCurve().ToProtoType())\r\n\r\nOUT = edges",
+      "VariableInputPorts": true,
+      "Id": "1af0ae7e6f044e55ac175b09d3d0542c",
+      "Inputs": [
+        {
+          "Id": "a933a8ec8505489cb43edc70851851c4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4243e5ef32d34e2594712b730ddbd57b",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "86f158008c184c61b7ac1e57265925a3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ca28b65f8cea472789b4fde16ab3e0e4",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nref = uidoc.Selection.PickObject(ObjectType.Face,'Please select face')\r\ne = uidoc.Document.GetElement(ref.ElementId)\r\nget_Geo = e.GetGeometryObjectFromReference(ref)\r\nget_Surface = get_Geo.ToProtoType()\r\nget_Line = get_Geo.GetEdgesAsCurveLoops()\r\nOUT = get_Line",
+      "VariableInputPorts": true,
+      "Id": "7b5258be93cc4adb89d848a896bc9745",
+      "Inputs": [
+        {
+          "Id": "2cab4e022b5445e2aab4e510f9b828f3",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "78131b4e97bd49429e21a9150b7d8ce7",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "1e587e0ae31b4a56b3d7334ee9bcbc9c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c4d967f6006846c2804b845e31c359b0",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\nOUT = [j.ToProtoType() for i in IN[0] for j in i]",
+      "VariableInputPorts": true,
+      "Id": "12021397dc8843c8b78c374fa272bce5",
+      "Inputs": [
+        {
+          "Id": "f3a823c104ea438186293a4a3e703d4d",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "914629a98a974f44ad415497db261233",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nref = uidoc.Selection.PickObject(ObjectType.Edge,'Please select Edge')\r\nfa = doc.GetElement(ref.ElementId)\r\nedge = fa.GetGeometryObjectFromReference(ref)\r\nget_edge = edge.AsCurve().ToProtoType()\r\n\r\nOUT = get_edge",
+      "VariableInputPorts": true,
+      "Id": "999075ad817a409da23d22396af76563",
+      "Inputs": [
+        {
+          "Id": "57c07ff9d1f841ca889234396e8f3369",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "27c86f2fee084d2d985e93f76f0afebe",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "d508b3d866824b63aa27a157fb28dfd3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "40f98627eea34500913b3afecc49bbf5",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\npoint = uidoc.Selection.PickPoint(ObjectSnapTypes.None,'Please Select Pick Point')\r\nOUT = point",
+      "VariableInputPorts": true,
+      "Id": "1817b568e66c4e7d9187d92be1ec4bff",
+      "Inputs": [
+        {
+          "Id": "db95a241de0e4841b9b98f621393d965",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cab7f8ceae5d4def859048f03b4100c8",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "650625afc10d45c59f304e1b3e35abfa",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "99b701db16b14aa0b53600f47c0c8048",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import sys\r\nimport clr\r\n#Cho Phép truy cập đến các đối tượng, view, sheet, element.... trong view hiện hành và chỉnh sửa được nó:\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n#Cho phép truy cập đến các node ở trong dynamo mà liên quan tới Revit:\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n#Tham chiếu đến các element, geometry trong dynamo:\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n#Tham chiếu đến thư viện của Revit và Revit API\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n#Tham chiếu đến module giao diện người dùng (thư viện đồ họa)\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference('System.Windows.Forms.DataVisualization') #Trực quan hóa dữ liệu. Biểu thị dữ liệu dưới dạng chart,đồ thị..\r\nimport System.Windows.Forms\r\nimport System.Drawing\r\nfrom System.Drawing import *\r\nfrom System.Windows.Forms import *\r\nfrom System.Collections.Generic import *\r\n#Lấy đối tượng document\r\ndoc = DocumentManager.Instance.CurrentDBDocument #Đại diện cho 1 dự án đang được mở (view hiện hành)\r\nview = doc.ActiveView\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument #Có thể truy cập các data từ RevitAPI\r\n\r\n#Code \r\nclass selectionfilter(ISelectionFilter):\r\n    def __init__(self,category):\r\n        self.category = category\r\n    def AllowElement(self, element):\r\n        if element.Category.Name in [c.Name for c in self.category]:\r\n            return True\r\n        else:\r\n            return False\r\n    def AllowReference(reference, point):\r\n        return False\r\n        \r\ncategory = [UnwrapElement(IN[1])]\r\nselffilt = selectionfilter(category)\r\nele = uidoc.Selection.PickElementsByRectangle(selffilt,\"Select Project\")\r\nOUT = ele",
+      "VariableInputPorts": true,
+      "Id": "473548bfe6ba435299c4da34cddf4dd3",
+      "Inputs": [
+        {
+          "Id": "64c099d794b64a1da981eba34ff43230",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3801e097a3b44a38acd4ceb94939c4b9",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9461ef94103e4e808de7e87ec77160ab",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
+      "SelectedIndex": 231,
+      "SelectedString": "OST_GenericModel",
+      "NodeType": "ExtensionNode",
+      "Id": "aa8954aa52cf41f09887dc0ff640fe46",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fca072c6cb7d42bf97af7be42aeb4301",
+          "Name": "Category",
+          "Description": "The selected Category.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All built-in categories."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "310d1980a5e346e0b8b7fd2899a7a701",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "818c8050c46d4630899162d5dc73a047",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5c78183c2a224e418853f4565fb48c62",
+      "End": "3b50ecf19f044a7ca7f29aad3b4ef9f5",
+      "Id": "d3577dfa312f41fb96f13388a2ff29ea"
+    },
+    {
+      "Start": "2b2c72dda6d14a429f1870288b015b51",
+      "End": "8aa666eeb0e142ab9a9879ee0fc0105c",
+      "Id": "3ad2f308c6cb4ddfa28f9e9871db18f5"
+    },
+    {
+      "Start": "3fcec51820fd4d08aaa8538d39a2e35a",
+      "End": "d927905d9056404e861b9cb65cc484e1",
+      "Id": "c7fa6ffe67974185b46c3d28618715ba"
+    },
+    {
+      "Start": "0101497e69b1459da2031e1388bfceba",
+      "End": "0a0b22b96ef34486bbb9adb34e52f022",
+      "Id": "1e286c9420f4478587b5189e77fe7024"
+    },
+    {
+      "Start": "129a9ef4066f4ffd9806c97cff78c6fc",
+      "End": "4d2260b85f534a439c2b1de92ed3668d",
+      "Id": "e28b6c8a171a4baca89bc73e1343075e"
+    },
+    {
+      "Start": "ca28b65f8cea472789b4fde16ab3e0e4",
+      "End": "a933a8ec8505489cb43edc70851851c4",
+      "Id": "9087bcf3087641119b2e36adf6c87817"
+    },
+    {
+      "Start": "78131b4e97bd49429e21a9150b7d8ce7",
+      "End": "f3a823c104ea438186293a4a3e703d4d",
+      "Id": "1cf0b50bbf3c4c83b43898071b90b726"
+    },
+    {
+      "Start": "c4d967f6006846c2804b845e31c359b0",
+      "End": "2cab4e022b5445e2aab4e510f9b828f3",
+      "Id": "ddc689bab6b84436acc2ab886e531674"
+    },
+    {
+      "Start": "40f98627eea34500913b3afecc49bbf5",
+      "End": "57c07ff9d1f841ca889234396e8f3369",
+      "Id": "823b6a13d7834380ba7e68fe545db826"
+    },
+    {
+      "Start": "99b701db16b14aa0b53600f47c0c8048",
+      "End": "db95a241de0e4841b9b98f621393d965",
+      "Id": "0617c70266e149bcba2ee54ec5a0f9a1"
+    },
+    {
+      "Start": "fca072c6cb7d42bf97af7be42aeb4301",
+      "End": "3801e097a3b44a38acd4ceb94939c4b9",
+      "Id": "a8c5f0105d1b431aaad10779ac3916de"
+    },
+    {
+      "Start": "818c8050c46d4630899162d5dc73a047",
+      "End": "64c099d794b64a1da981eba34ff43230",
+      "Id": "7dfc101f77b9427e8a03a75a25120f71"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -2671.0102356176658,
+      "EyeY": 2307.5177210727834,
+      "EyeZ": 6993.540601709341,
+      "LookX": 2196.9394348364158,
+      "LookY": -2380.0177210727834,
+      "LookZ": -10618.540601709341,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Select Model Elements ",
+        "Id": "9e2fe539920a4e28a666d5aaa47db5c1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 226.22811816126796,
+        "Y": 336.57774201751056
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "3af1e97002864e4eaee8cccc7d97bf1d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": -33.771881838732043,
+        "Y": 337.57774201751056
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Model Element",
+        "Id": "e07cefa30b504e609e4b0476bfc9714b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 206.43307951480756,
+        "Y": 515.16149214042616
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "c8f96dde1d2945f0843272fa522b8d9c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -39.724365940767882,
+        "Y": 518.93103130880013
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Face",
+        "Id": "1769c0af467e43e8b75c4c72eaf391f6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 227.03288639122695,
+        "Y": 696.24226737040124
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "f11cd7b345524e548ad16dd4d405b003",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -33.969461585816532,
+        "Y": 690.96296628634855
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Faces to PlanarFace",
+        "Id": "b6cd66c187cb4e479f6a48930a859bdd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 239.90405352021327,
+        "Y": 1041.1228664145797
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "648a7a5d7ed244dbaa250c73c48c1dc7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -33.774290742019332,
+        "Y": 1041.2746689758822
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "DB.Line to Line Level 4",
+        "Id": "c90f054639d840f0a52e3b5f87a68041",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 515.61324666497535,
+        "Y": 1043.961887916467
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Edges",
+        "Id": "1af0ae7e6f044e55ac175b09d3d0542c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 221.42884089500649,
+        "Y": 1398.7447337583376
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "86f158008c184c61b7ac1e57265925a3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -52.249503367226225,
+        "Y": 1398.8965363196376
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Face to PlanarFace",
+        "Id": "7b5258be93cc4adb89d848a896bc9745",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 322.33010270732711,
+        "Y": 873.67650860167282
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "1e587e0ae31b4a56b3d7334ee9bcbc9c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -37.816970019498285,
+        "Y": 877.48324181999692
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "DB.Line to Line Level 3",
+        "Id": "12021397dc8843c8b78c374fa272bce5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 565.23511447343117,
+        "Y": 874.79914850947182
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Edge ",
+        "Id": "999075ad817a409da23d22396af76563",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 269.56321367010219,
+        "Y": 1228.459295798026
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "d508b3d866824b63aa27a157fb28dfd3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -42.384692697914716,
+        "Y": 1230.2577304180663
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Pick Point",
+        "Id": "1817b568e66c4e7d9187d92be1ec4bff",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 159.09787147023803,
+        "Y": 1576.0193864555533
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "650625afc10d45c59f304e1b3e35abfa",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -58.326995265714061,
+        "Y": 1574.9211117384916
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "473548bfe6ba435299c4da34cddf4dd3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1416.442296921696,
+        "Y": 1267.297401760808
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Categories",
+        "Id": "aa8954aa52cf41f09887dc0ff640fe46",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1159.9276864050187,
+        "Y": 1299.9655717345572
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "310d1980a5e346e0b8b7fd2899a7a701",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1193.7921156025018,
+        "Y": 1207.2064830631909
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "732aa557498f47fdad94a19611ecbd47",
+        "Title": "Select Model Elements",
+        "Nodes": [
+          "9e2fe539920a4e28a666d5aaa47db5c1",
+          "3af1e97002864e4eaee8cccc7d97bf1d"
+        ],
+        "Left": -43.771881838732043,
+        "Top": 283.57774201751056,
+        "Width": 435.0,
+        "Height": 146.0,
+        "FontSize": 36.0,
+        "InitialTop": 336.57774201751056,
+        "InitialHeight": 146.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "2afce0aac1d14c07aae4a6071c83d479",
+        "Title": "Select Model Element",
+        "Nodes": [
+          "e07cefa30b504e609e4b0476bfc9714b",
+          "c8f96dde1d2945f0843272fa522b8d9c"
+        ],
+        "Left": -49.724365940767882,
+        "Top": 462.16149214042616,
+        "Width": 411.15744545557544,
+        "Height": 146.0,
+        "FontSize": 36.0,
+        "InitialTop": 515.16149214042616,
+        "InitialHeight": 148.76953916837397,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "682fc877832f4c43919ff790d8739ee9",
+        "Title": "Select Face",
+        "Nodes": [
+          "1769c0af467e43e8b75c4c72eaf391f6",
+          "f11cd7b345524e548ad16dd4d405b003"
+        ],
+        "Left": -43.969461585816532,
+        "Top": 637.96296628634855,
+        "Width": 405.00234797704348,
+        "Height": 151.27930108405269,
+        "FontSize": 36.0,
+        "InitialTop": 690.96296628634855,
+        "InitialHeight": 150.27930108405269,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "efd690e6725a4ade807dc54b00c362ab",
+        "Title": "Select Faces to Lines",
+        "Nodes": [
+          "b6cd66c187cb4e479f6a48930a859bdd",
+          "648a7a5d7ed244dbaa250c73c48c1dc7",
+          "c90f054639d840f0a52e3b5f87a68041"
+        ],
+        "Left": -43.774290742019332,
+        "Top": 988.12286641457968,
+        "Width": 720.38753740699462,
+        "Height": 148.83902150188737,
+        "FontSize": 36.0,
+        "InitialTop": 1041.1228664145797,
+        "InitialHeight": 147.83902150188737,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "aaecd7b395b54c2986cdc2525d17afa5",
+        "Title": "Select Edges to Lines",
+        "Nodes": [
+          "1af0ae7e6f044e55ac175b09d3d0542c",
+          "86f158008c184c61b7ac1e57265925a3"
+        ],
+        "Left": -62.249503367226225,
+        "Top": 1345.7447337583376,
+        "Width": 417.67834426223271,
+        "Height": 146.0,
+        "FontSize": 36.0,
+        "InitialTop": 1398.7447337583376,
+        "InitialHeight": 145.15180256129997,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "fbfa145087d64e768855d5df88cd391e",
+        "Title": "Select Face to Line",
+        "Nodes": [
+          "7b5258be93cc4adb89d848a896bc9745",
+          "1e587e0ae31b4a56b3d7334ee9bcbc9c",
+          "12021397dc8843c8b78c374fa272bce5"
+        ],
+        "Left": -47.816970019498285,
+        "Top": 820.67650860167282,
+        "Width": 774.05208449292945,
+        "Height": 146.0,
+        "FontSize": 36.0,
+        "InitialTop": 873.67650860167282,
+        "InitialHeight": 148.8067332183241,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4c4ee166f53b41a3a2c3d027951bfe13",
+        "Title": "Select Face to Line",
+        "Nodes": [
+          "999075ad817a409da23d22396af76563",
+          "d508b3d866824b63aa27a157fb28dfd3"
+        ],
+        "Left": -52.384692697914716,
+        "Top": 1175.459295798026,
+        "Width": 455.9479063680169,
+        "Height": 146.0,
+        "FontSize": 36.0,
+        "InitialTop": 1228.459295798026,
+        "InitialHeight": 146.79843462004033,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "eff3ae5a32344bd6821d32174da6c230",
+        "Title": "Select Pick Point",
+        "Nodes": [
+          "1817b568e66c4e7d9187d92be1ec4bff",
+          "650625afc10d45c59f304e1b3e35abfa"
+        ],
+        "Left": -68.326995265714061,
+        "Top": 1521.9211117384916,
+        "Width": 361.42486673595209,
+        "Height": 147.09827471706171,
+        "FontSize": 36.0,
+        "InitialTop": 1574.9211117384916,
+        "InitialHeight": 146.09827471706171,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -1618.8486111466234,
+    "Y": -1611.7583031087329,
+    "Zoom": 1.4622671597487678
+  }
+}
